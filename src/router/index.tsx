@@ -1,12 +1,14 @@
-import { RouteObject, createHashRouter } from "react-router-dom";
+import { RouteObject, createBrowserRouter } from "react-router-dom";
 import { AppstoreOutlined, ContainerOutlined } from '@ant-design/icons';
 import Layout from '../components/layout';
 import Home from "../view/home";
 import WebThree from "../view/webThree";
-const router = createHashRouter([
+import Login from "../view/login";
+import PrivateRoute from "../components/common/private-route";
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <PrivateRoute><Layout /></PrivateRoute> ,
     children: [
       {
         path: "home",
@@ -36,6 +38,10 @@ const router = createHashRouter([
       },
     ],
   },
+  {
+    path: '/login',
+    element: <Login />,
+  }
 ] as RouteObject[]);
 
 export  default router;

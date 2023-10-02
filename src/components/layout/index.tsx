@@ -3,6 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
 import { Layout } from 'antd';
 import SiderMenu from "./side-menu";
 import { useEffect, useState } from "react";
+import HeaderContent from "./hearder-content";
 const { Header, Footer, Sider, Content } = Layout;
 function layout() {
   const navigate = useNavigate();
@@ -16,7 +17,9 @@ function layout() {
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">
-        <Header className="bg-transparent text-black">Header</Header>
+        <Header className="text-black">
+          <HeaderContent />
+        </Header>
         <Layout>
           <Sider className="bg-transparent text-black" theme="light" collapsible collapsed={collapsed}>
             <div onClick={toggleCollapsed} className='text-right pr-6'>
