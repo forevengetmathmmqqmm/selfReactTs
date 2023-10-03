@@ -7,3 +7,6 @@ export enum userReduce {
   token = 'Token',
   userInfo = 'UserInfo',
 }
+export enum appReduce {
+  selectedKeys = 'SelectedKeys'
+}

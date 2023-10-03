@@ -12,12 +12,12 @@ function layout() {
     setCollapsed(!collapsed);
   };
   useEffect(() => {
-    navigate('/home');
+    navigate('/setting');
   }, [])
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">
-        <Header className="text-black">
+        <Header className="text-black px-6">
           <HeaderContent />
         </Header>
         <Layout>
@@ -27,7 +27,7 @@ function layout() {
             </div>
             <SiderMenu />
           </Sider>
-          <Content className="text-black">
+          <Content className="text-black bg-slate-100">
             <Outlet />
           </Content>
         </Layout>

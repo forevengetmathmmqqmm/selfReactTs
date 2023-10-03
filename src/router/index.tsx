@@ -5,6 +5,8 @@ import Home from "../view/home";
 import WebThree from "../view/webThree";
 import Login from "../view/login";
 import PrivateRoute from "../components/common/private-route";
+import Personal from "../view/personal";
+import Setting from "../view/setting";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +37,24 @@ const router = createBrowserRouter([
             name: '链接',
           },
         }]
+      },
+      {
+        path: "personal",
+        element: <Personal />,
+        handle: {
+          icon: <AppstoreOutlined />,
+          show: true,
+          name: '个人中心',
+        },
+      },
+      {
+        path: "setting",
+        element: <Setting />,
+        handle: {
+          icon: <AppstoreOutlined />,
+          show: true,
+          name: '个人设置',
+        },
       },
     ],
   },

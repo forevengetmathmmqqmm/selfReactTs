@@ -1,9 +1,17 @@
+import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
-const PrivateRoute = (props: { children: React.ReactNode }): JSX.Element => {
- const { children } = props
- // 拿到判断是否登录的变量
- const isLoggedIn:boolean = false
-
+import { userToken } from "../../actions";
+const PrivateRoute = (props: { children: React.ReactNode, token: string, setToken: (token: string) => void }): JSX.Element => {
+  let { children, token } = props
+  let isLoggedIn: boolean = true;
+  if (token) {
+    isLoggedIn = true;
+  } else if(localStorage.getItem('token')){
+    isLoggedIn = true;
+    props.setToken(localStorage.getItem('token') || '');
+  } else {
+    isLoggedIn = false;
+  }
   return isLoggedIn ? (
     <>{children}</>
   ) : (
@@ -16,4 +24,12 @@ const PrivateRoute = (props: { children: React.ReactNode }): JSX.Element => {
       </>
   )
 }
-export default PrivateRoute;
+const mapStateToProps = (state: any) => {
+  return {
+    token: state.user.token
+  }
+}
+const mapDispatchToProps = (dispatch: any) => ({
+  setToken: (token: string) => dispatch(userToken(token))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);

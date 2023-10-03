@@ -3,10 +3,14 @@ import { Button, Form, Input } from "antd";
 import SelfIcon from "../components/common/self-icon";
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-
-const login: React.FC = () => {
+import { connect } from "react-redux";
+import { userToken } from "../actions";
+import { useEffect } from "react";
+const login: React.FC<{setToken: (token: string) => void}> = (props) => {
   const navigate = useNavigate();
-
+  useEffect(() => { 
+    props.setToken('ssss');
+  }, [])
   const onFinish = () => {
     navigate("/")
   };
@@ -46,4 +50,7 @@ const login: React.FC = () => {
     </>
   )
 }
-export default login;
+const mapDispatchToProps = (dispatch: any) => ({
+  setToken: (token: string) => dispatch(userToken(token))
+});
+export default connect(null, mapDispatchToProps)(login);
