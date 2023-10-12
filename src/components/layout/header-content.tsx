@@ -1,7 +1,7 @@
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { LogoutOutlined, SettingFilled, UserOutlined } from '@ant-design/icons';
-import { headerKeys } from '../../utiles/enums';
+import { headerKeys } from '../../utils/enums';
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { menuSelectKeys, userToken } from '../../actions';

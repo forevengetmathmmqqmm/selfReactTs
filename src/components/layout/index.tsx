@@ -3,17 +3,25 @@ import { MenuFoldOutlined, MenuUnfoldOutlined,} from '@ant-design/icons';
 import { Layout } from 'antd';
 import SiderMenu from "./side-menu";
 import { useEffect, useState } from "react";
-import HeaderContent from "./hearder-content";
+import HeaderContent from "./header-content";
+import { userDetailApi } from "../../api/user";
+import { connect } from "react-redux";
 const { Header, Footer, Sider, Content } = Layout;
-function layout() {
+
+const layout:React.FC<{
+  id: string
+}> = (props) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
   useEffect(() => {
+    props.id && userDetailApi(props.id).then(res => {
+      console.log('>>>>', res);
+    })
     navigate('/setting');
-  }, [])
+  }, [props.id])
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">
@@ -36,4 +44,9 @@ function layout() {
     </div>
   )
 }
-export default layout;
+const mapStateToProps = (state: any) => {
+  return {
+    id: state.user.userId
+  }
+}
+export default connect(mapStateToProps)(layout);

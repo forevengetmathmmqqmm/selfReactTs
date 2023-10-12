@@ -1,14 +1,34 @@
-import { Button, Form, Input, Menu } from "antd";
+import { Button, Form, Input, Menu, Upload, UploadProps, message } from "antd";
 import { ItemType, MenuItemType } from "antd/es/menu/hooks/useItems";
 import { useEffect, useState } from "react";
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from "antd/es/input/TextArea";
-const setting: React.FC = () => {
-  const toUrl = (e: any) => {
-    setSelectedKeys(e.key)
-  }
+import { connect } from "react-redux";
+import { userInfoInter } from "../utils/inter";
+const setting: React.FC<{
+  token: string
+  userInfo: userInfoInter
+}> = (props) => {
+  const [form] = Form.useForm();
   const [menus, setMenus] = useState<ItemType<MenuItemType>[]>();
   const [selectedKeys, setSelectedKeys] = useState('base');
+  const [upConfig, _] = useState<UploadProps>({
+    name: 'file',
+    action: import.meta.env.VITE_BASE_URL + '/uploads',
+    headers: {
+      authorization: props.token,
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  })
   useEffect(() => { 
     setMenus([{
       key: 'base',
@@ -18,10 +38,17 @@ const setting: React.FC = () => {
       label: '安全设置',
     }])
   }, [])
+  useEffect(() => {
+    console.log('>>>>>userinfo', props.userInfo);
+    form.setFieldsValue(props.userInfo)
+  }, [props.userInfo])
+
   const onFinish = (e: any) => {
     console.log('>>>>>>', e);
-
   };
+  const toUrl = (e: any) => {
+    setSelectedKeys(e.key)
+  }
   return (
     <>
       <div className="w-full h-full p-[24px] flex">
@@ -40,11 +67,14 @@ const setting: React.FC = () => {
               <div className="text-[24px]">基本设置</div>
               <div className="flex flex-col items-center pt-[12px]">
                 <img src="/src/assets/one.jpg" className="w-[96px] h-[96px] rounded-[50%]" />
-                <Button type="dashed" className="w-[110px] mt-[6px]" icon={<UploadOutlined />}>更换头像</Button>
+                <Upload {...upConfig}>
+                  <Button type="dashed" className="w-[110px] mt-[6px]" icon={<UploadOutlined />}>更换头像</Button>
+                </Upload>
               </div>
               <Form
                 className="mt-[12px]"
                 name="wrap"
+                form={form}
                 labelCol={{ flex: '110px' }}
                 labelAlign="left"
                 wrapperCol={{ flex: 1 }}
@@ -52,7 +82,7 @@ const setting: React.FC = () => {
                 style={{ maxWidth: 600 }}
                 onFinish={onFinish}
               >
-                <Form.Item label="昵 称" name="username" rules={[{ required: true, message: '请填写昵称!' }]}>
+                <Form.Item label="昵 称" name="nickname" rules={[{ required: true, message: '请填写昵称!' }]}>
                   <Input />
                 </Form.Item>
                 <Form.Item label="邮 箱" name="email" rules={[{ required: true, message: '请填写邮箱!' }]}>
@@ -80,4 +110,10 @@ const setting: React.FC = () => {
     </>
   )
 }
-export default setting;
+const mapStateToProps = (state: any) => {
+  return {
+    token: state.user.token,
+    userInfo: state.user.userInfo,
+  }
+}
+export default connect(mapStateToProps)(setting);

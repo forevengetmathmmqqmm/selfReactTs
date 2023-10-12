@@ -1,4 +1,4 @@
-import { appReduce } from "../utiles/enums";
+import { appReduce } from "../utils/enums";
 
 const appState = {
   selectedKeys: []

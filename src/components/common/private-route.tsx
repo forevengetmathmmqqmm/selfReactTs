@@ -1,14 +1,23 @@
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
-import { userToken } from "../../actions";
-const PrivateRoute = (props: { children: React.ReactNode, token: string, setToken: (token: string) => void }): JSX.Element => {
+import { userIdAct, userInfoAct, userToken } from "../../actions";
+import { userInfoInter } from "../../utils/inter";
+const PrivateRoute: React.FC<{
+  children: React.ReactNode
+  token: string
+  setToken: (token: string) => void
+  setUserId: (val: string) => void
+  setUserInfo: (val: userInfoInter) => void
+}> = (props) => {
   let { children, token } = props
   let isLoggedIn: boolean = true;
   if (token) {
     isLoggedIn = true;
   } else if(localStorage.getItem('token')){
     isLoggedIn = true;
-    props.setToken(localStorage.getItem('token') || '');
+    props.setToken(localStorage.getItem('token') as string);
+    props.setUserInfo(JSON.parse(localStorage.getItem('userInfo') as string));
+    props.setUserId(localStorage.getItem('userId') as string)
   } else {
     isLoggedIn = false;
   }
@@ -30,6 +39,8 @@ const mapStateToProps = (state: any) => {
   }
 }
 const mapDispatchToProps = (dispatch: any) => ({
-  setToken: (token: string) => dispatch(userToken(token))
+  setToken: (token: string) => dispatch(userToken(token)),
+  setUserInfo: (userinfo: userInfoInter) => dispatch(userInfoAct(userinfo)),
+  setUserId: (id: string) => dispatch(userIdAct(id)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);

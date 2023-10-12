@@ -4,15 +4,20 @@ import SelfIcon from "../components/common/self-icon";
 import { UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { userToken } from "../actions";
-import { useEffect } from "react";
-const login: React.FC<{setToken: (token: string) => void}> = (props) => {
+import { userIdAct, userToken } from "../actions";
+import { loginApi } from "../api/user";
+
+const login: React.FC<{
+  setToken: (token: string) => void
+  setUserId: (val: string) => void
+}> = (props) => {
   const navigate = useNavigate();
-  useEffect(() => { 
-    props.setToken('ssss');
-  }, [])
-  const onFinish = () => {
-    navigate("/")
+  const onFinish = (data: { nickname: any; password: any; }) => {
+    loginApi({nickname: data.nickname, password: data.password }).then(res => {
+      props.setToken(res.data.token)
+      props.setUserId(res.data.id)
+      navigate("/")
+    })
   };
   return (
     <>
@@ -30,7 +35,7 @@ const login: React.FC<{setToken: (token: string) => void}> = (props) => {
             onFinish={onFinish}
           >
             <Form.Item
-              name="username"
+              name="nickname"
               rules={[{ required: true, message: '请填写用户名!' }]}
             >
               <Input size="large" placeholder="用户名 admin" prefix={<UserOutlined />} />
@@ -51,6 +56,7 @@ const login: React.FC<{setToken: (token: string) => void}> = (props) => {
   )
 }
 const mapDispatchToProps = (dispatch: any) => ({
-  setToken: (token: string) => dispatch(userToken(token))
+  setToken: (token: string) => dispatch(userToken(token)),
+  setUserId: (id: string) => dispatch(userIdAct(id))
 });
 export default connect(null, mapDispatchToProps)(login);

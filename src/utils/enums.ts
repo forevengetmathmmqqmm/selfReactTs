@@ -6,6 +6,7 @@ export enum headerKeys {
 export enum userReduce {
   token = 'Token',
   userInfo = 'UserInfo',
+  userId = 'userId'
 }
 export enum appReduce {
   selectedKeys = 'SelectedKeys'
