@@ -35,7 +35,7 @@ const router = createBrowserRouter([
           handle: {
             icon: <ContainerOutlined />,
             show: true,
-            name: '链接',
+            name: 'metamask',
           },
         }]
       },
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         path: "pigsty",
         handle: {
           icon: <SelfIcon type={"icon-pigsty"} />,
-          show: true,
+          show: false,
           name: '猪圈管理',
         },
         children: [{

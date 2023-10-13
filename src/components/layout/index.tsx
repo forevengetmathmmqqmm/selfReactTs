@@ -7,14 +7,16 @@ import HeaderContent from "./header-content";
 import { userDetailApi } from "../../api/user";
 import { connect } from "react-redux";
 import { userInfoInter } from "../../utils/inter";
-import { userInfoAct } from "../../actions";
+import { menuSelectKeys, userInfoAct } from "../../actions";
 const { Header, Footer, Sider, Content } = Layout;
 
 const layout:React.FC<{
   id: string
   setUserInfo: (val: userInfoInter) => void
+  setSelectKeys: (val: string[]) => void
 }> = (props) => {
   const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -23,9 +25,13 @@ const layout:React.FC<{
     props.id && userDetailApi(props.id).then(res => {
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       props.setUserInfo(res.data)
-      navigate('/setting');
+      navigate('/webThree/connect');
     })
   }, [props.id])
+  useEffect(() => {
+    let paths = location.pathname.split('/').filter(item => item);
+    props.setSelectKeys(paths)
+  }, [])
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">
@@ -55,5 +61,6 @@ const mapStateToProps = (state: any) => {
 }
 const mapDispatchToProps = (dispatch: any) => ({
   setUserInfo: (userinfo: userInfoInter) => dispatch(userInfoAct(userinfo)),
+  setSelectKeys: (keys: string[]) => dispatch(menuSelectKeys(keys)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(layout);

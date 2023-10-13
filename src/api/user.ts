@@ -38,3 +38,16 @@ export function editUserApi(data: UserInter) {
     data: data,
   })
 }
+
+// 创建钱包
+export interface WalletInter {
+  wallet_address: string
+  keystore: string
+}
+export function walletApi(data: WalletInter) {
+  return request({
+    url: '/wallet',
+    method: 'POST',
+    data: data,
+  })
+}

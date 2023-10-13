@@ -24,14 +24,16 @@ const siderMenu: React.FC<{
   function getItems(arr: RouteObject[], routers: MenuItem[]) {
     for (let index = 0; index < arr.length; index++) {
       let item = arr[index];
-      routers[index] = {
-        label: item.handle.name,
-        icon: item.handle.icon,
-        key: item.path,
-      } as MenuItem
-      if(item.children?.length) {
-        (routers[index] as SubMenuType).children = [] as MenuItem[];
-        getItems(item.children, (routers[index] as SubMenuType).children);
+      if(item.handle.show) {
+        routers[index] = {
+          label: item.handle.name,
+          icon: item.handle.icon,
+          key: item.path,
+        } as MenuItem
+        if(item.children?.length) {
+          (routers[index] as SubMenuType).children = [] as MenuItem[];
+          getItems(item.children, (routers[index] as SubMenuType).children);
+        }
       }
     }
   }
@@ -43,6 +45,7 @@ const siderMenu: React.FC<{
     <div className='w-full'>
       <Menu
         selectedKeys={ selectedKeys }
+        openKeys={ selectedKeys }
         mode="inline"
         onClick={toUrl}
         items={menus}

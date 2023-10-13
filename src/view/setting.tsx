@@ -6,7 +6,6 @@ import TextArea from "antd/es/input/TextArea";
 import { connect } from "react-redux";
 import { userInfoInter } from "../utils/inter";
 import { UserInter, editUserApi } from "../api/user";
-import SelfIcon from "../components/common/self-icon";
 const setting: React.FC<{
   token: string
   userInfo: userInfoInter

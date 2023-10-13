@@ -4,4 +4,5 @@ export interface userInfoInter {
   email: string
   avatar: string
   phone: string
+  keystore: string
 }

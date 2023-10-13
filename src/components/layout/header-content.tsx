@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { menuSelectKeys, userToken } from '../../actions';
 import SelfIcon from '../common/self-icon';
 import { userInfoInter } from '../../utils/inter';
+import { useEffect, useState } from 'react';
 const items: MenuProps['items'] = [
   {
     key: headerKeys.personal,
@@ -25,7 +26,7 @@ const items: MenuProps['items'] = [
     ),
   },
   {
-    key: headerKeys.loginout,
+    key: headerKeys.logout,
     label: (
       <Space><LogoutOutlined />退出登录</Space>
     ),
@@ -38,8 +39,15 @@ const HeaderContent: React.FC<{
   setSelectKeys: (val: string[]) => void
 }> = (props) => {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({
+    avatar: '',
+    nickname: '',
+  })
+  useEffect(() => {
+    setUserInfo(props.userInfo)
+  }, [props.userInfo])
   const onClick: MenuProps['onClick'] = ({ key }) => {
-    if (key == headerKeys.loginout) {
+    if (key == headerKeys.logout) {
       navigate("/login");
       localStorage.removeItem('token');
       props.setToken();
@@ -57,8 +65,8 @@ const HeaderContent: React.FC<{
         </div>
 				<Dropdown menu={{ items, onClick }}>
 					<div className="flex items-center ">
-						<img src={ props.userInfo?.avatar } className="w-[42px] h-[42px] rounded-full" />
-						<span className="w-16 ml-3">{props.userInfo?.nickname}</span>
+						<img src={ userInfo.avatar } className="w-[42px] h-[42px] rounded-full" />
+						<span className="w-16 ml-3">{userInfo.nickname}</span>
 					</div>
 				</Dropdown>
 			</div>

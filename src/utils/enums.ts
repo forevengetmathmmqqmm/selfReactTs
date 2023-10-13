@@ -1,7 +1,7 @@
 export enum headerKeys {
   personal = 'personal',
   setting = 'setting',
-  loginout = 'loginout',
+  logout = 'logout',
 }
 export enum userReduce {
   token = 'Token',
