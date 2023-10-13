@@ -23,9 +23,9 @@ const login: React.FC<{
     <>
       <div className="w-screen h-screen flex justify-center items-center">
         <div className="text-center w-72">
-          <div className="flex items-center">
+          <div className="flex items-center text-yellow-400">
             <SelfIcon className="text-6xl" type={"icon-web3"} />
-            <span className="text-4xl ml-2 text-yellow-400" >web3 admin</span>
+            <span className="text-4xl ml-2" >web3 admin</span>
           </div>
           <div className="text-xs mt-1">连接matemask，在区块链上进行交易</div>
           <Form

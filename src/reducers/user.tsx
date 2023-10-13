@@ -1,3 +1,4 @@
+import { my_cookies } from "../utils";
 import { userReduce } from "../utils/enums";
 import { userInfoInter } from "../utils/inter";
 interface UserStateInter {
@@ -14,7 +15,7 @@ const userState: UserStateInter = {
 const user = (state = userState, action: { type: userReduce, payload: any }) => {
   switch (action.type) {
     case userReduce.token:
-      localStorage.setItem('token', action.payload);
+      my_cookies.setItem('token', action.payload, {expires: "3h"})
       return {
         ...state,
         token: action.payload

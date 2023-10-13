@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { menuSelectKeys, userToken } from '../../actions';
 import SelfIcon from '../common/self-icon';
+import { userInfoInter } from '../../utils/inter';
 const items: MenuProps['items'] = [
   {
     key: headerKeys.personal,
@@ -32,6 +33,7 @@ const items: MenuProps['items'] = [
 ];
 
 const HeaderContent: React.FC<{
+  userInfo: userInfoInter
   setToken: () => void
   setSelectKeys: (val: string[]) => void
 }> = (props) => {
@@ -49,22 +51,27 @@ const HeaderContent: React.FC<{
 	return (
 		<>
 			<div className="text-white flex justify-between">
-        <div className='flex items-center'>
+        <div className='flex items-center text-yellow-400'>
           <SelfIcon className="text-4xl" type={"icon-web3"} />
-          <span className="text-xl ml-2 text-yellow-400" >web3 admin</span>
+          <span className="text-xl ml-2" >web3 admin</span>
         </div>
 				<Dropdown menu={{ items, onClick }}>
 					<div className="flex items-center ">
-						<img src="/src/assets/one.jpg" className="w-[42px] h-[42px] rounded-full" />
-						<span className="w-16 ml-3">admin</span>
+						<img src={ props.userInfo?.avatar } className="w-[42px] h-[42px] rounded-full" />
+						<span className="w-16 ml-3">{props.userInfo?.nickname}</span>
 					</div>
 				</Dropdown>
 			</div>
 		</>
 	);
 }
+const mapStateToProps = (state: any) => {
+  return {
+    userInfo: state.user.userInfo
+  }
+}
 const mapDispatchToProps = (dispatch: any) => ({
   setToken: () => dispatch(userToken('')),
   setSelectKeys: (keys: string[]) => dispatch(menuSelectKeys(keys)),
 })
-export default connect(null, mapDispatchToProps)(HeaderContent);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContent);

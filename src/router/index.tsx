@@ -7,6 +7,7 @@ import Login from "../view/login";
 import PrivateRoute from "../components/common/private-route";
 import Personal from "../view/personal";
 import Setting from "../view/setting";
+import SelfIcon from "../components/common/self-icon";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,12 +25,29 @@ const router = createBrowserRouter([
       {
         path: "webThree",
         handle: {
-          icon: <ContainerOutlined />,
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-web3"} />,
           show: true,
           name: 'WEB3',
         },
         children: [{
           path: 'connect',
+          element: <WebThree />,
+          handle: {
+            icon: <ContainerOutlined />,
+            show: true,
+            name: '链接',
+          },
+        }]
+      },
+      {
+        path: "pigsty",
+        handle: {
+          icon: <SelfIcon type={"icon-pigsty"} />,
+          show: true,
+          name: '猪圈管理',
+        },
+        children: [{
+          path: 'pig',
           element: <WebThree />,
           handle: {
             icon: <ContainerOutlined />,

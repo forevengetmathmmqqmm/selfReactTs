@@ -1,7 +1,8 @@
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
-import { userIdAct, userInfoAct, userToken } from "../../actions";
-import { userInfoInter } from "../../utils/inter";
+import { userIdAct, userInfoAct, userToken } from "../../actions"
+import { userInfoInter } from "../../utils/inter"
+import { my_cookies } from "../../utils"
 const PrivateRoute: React.FC<{
   children: React.ReactNode
   token: string
@@ -13,10 +14,10 @@ const PrivateRoute: React.FC<{
   let isLoggedIn: boolean = true;
   if (token) {
     isLoggedIn = true;
-  } else if(localStorage.getItem('token')){
+  } else if(my_cookies.getItem('token')){
     isLoggedIn = true;
-    props.setToken(localStorage.getItem('token') as string);
-    props.setUserInfo(JSON.parse(localStorage.getItem('userInfo') as string));
+    props.setToken(my_cookies.getItem('token') as string);
+    props.setUserInfo(JSON.parse(localStorage.getItem('userInfo') as string))
     props.setUserId(localStorage.getItem('userId') as string)
   } else {
     isLoggedIn = false;

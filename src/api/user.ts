@@ -19,3 +19,22 @@ export function userDetailApi(id:string | number) {
     method: 'GET',
   })
 }
+
+// 修改用户
+export interface UserInter {
+  id: number
+  nickname: string
+  phone: string
+  email: string
+  wallet_address: string
+  address: string
+  intro: string
+  avatar: string
+}
+export function editUserApi(data: UserInter) {
+  return request({
+    url: '/user',
+    method: 'POST',
+    data: data,
+  })
+}

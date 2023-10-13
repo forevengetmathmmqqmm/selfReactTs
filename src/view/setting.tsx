@@ -5,6 +5,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import TextArea from "antd/es/input/TextArea";
 import { connect } from "react-redux";
 import { userInfoInter } from "../utils/inter";
+import { UserInter, editUserApi } from "../api/user";
+import SelfIcon from "../components/common/self-icon";
 const setting: React.FC<{
   token: string
   userInfo: userInfoInter
@@ -12,6 +14,7 @@ const setting: React.FC<{
   const [form] = Form.useForm();
   const [menus, setMenus] = useState<ItemType<MenuItemType>[]>();
   const [selectedKeys, setSelectedKeys] = useState('base');
+  const [imgUrl, setImgUrl] = useState('')
   const [upConfig, _] = useState<UploadProps>({
     name: 'file',
     action: import.meta.env.VITE_BASE_URL + '/uploads',
@@ -23,7 +26,7 @@ const setting: React.FC<{
         console.log(info.file, info.fileList);
       }
       if (info.file.status === 'done') {
-        
+        setImgUrl(info.file.response.data.path)
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
@@ -39,12 +42,21 @@ const setting: React.FC<{
     }])
   }, [])
   useEffect(() => {
-    console.log('>>>>>userinfo', props.userInfo);
+    setImgUrl(props.userInfo.avatar)
     form.setFieldsValue(props.userInfo)
   }, [props.userInfo])
 
-  const onFinish = (e: any) => {
-    console.log('>>>>>>', e);
+  const onFinish = async (e: any) => {
+    let data = {} as UserInter;
+    Object.assign(data, e);
+    data.id = props.userInfo.id;
+    if(!imgUrl){
+
+    } else {
+      data.avatar = imgUrl;
+      const res = await editUserApi(data);
+      
+    }
   };
   const toUrl = (e: any) => {
     setSelectedKeys(e.key)
@@ -63,10 +75,10 @@ const setting: React.FC<{
         <div className="flex-1">
           {
             selectedKeys == 'base' ?
-            <div className="w-full bg-white ml-[6px] p-[12px] h-full" >
+            <div className="w-full bg-white ml-[6px] p-[12px] h-full max-w-[600px]" >
               <div className="text-[24px]">基本设置</div>
               <div className="flex flex-col items-center pt-[12px]">
-                <img src="/src/assets/one.jpg" className="w-[96px] h-[96px] rounded-[50%]" />
+                <img src={imgUrl} className="w-[96px] h-[96px] rounded-[50%]" />
                 <Upload {...upConfig}>
                   <Button type="dashed" className="w-[110px] mt-[6px]" icon={<UploadOutlined />}>更换头像</Button>
                 </Upload>
@@ -88,14 +100,14 @@ const setting: React.FC<{
                 <Form.Item label="邮 箱" name="email" rules={[{ required: true, message: '请填写邮箱!' }]}>
                   <Input />
                 </Form.Item>
-                <Form.Item label="个人简介" name="intro">
-                  <TextArea rows={4} />
+                <Form.Item label="联系电话" name="phone">
+                  <Input />
                 </Form.Item>
                 <Form.Item label="所在地区" name="address">
                   <Input />
                 </Form.Item>
-                <Form.Item label="联系电话" name="phone">
-                  <Input />
+                <Form.Item label="个人简介" name="intro">
+                  <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item label=" ">
                   <Button type="primary" htmlType="submit" className="bg-yellow-300">提 交</Button>

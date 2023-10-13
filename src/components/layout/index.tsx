@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import HeaderContent from "./header-content";
 import { userDetailApi } from "../../api/user";
 import { connect } from "react-redux";
+import { userInfoInter } from "../../utils/inter";
+import { userInfoAct } from "../../actions";
 const { Header, Footer, Sider, Content } = Layout;
 
 const layout:React.FC<{
   id: string
+  setUserInfo: (val: userInfoInter) => void
 }> = (props) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -18,9 +21,10 @@ const layout:React.FC<{
   };
   useEffect(() => {
     props.id && userDetailApi(props.id).then(res => {
-      console.log('>>>>', res);
+      localStorage.setItem('userInfo', JSON.stringify(res.data));
+      props.setUserInfo(res.data)
+      navigate('/setting');
     })
-    navigate('/setting');
   }, [props.id])
   return (
     <div className="w-screen h-screen">
@@ -49,4 +53,7 @@ const mapStateToProps = (state: any) => {
     id: state.user.userId
   }
 }
-export default connect(mapStateToProps)(layout);
+const mapDispatchToProps = (dispatch: any) => ({
+  setUserInfo: (userinfo: userInfoInter) => dispatch(userInfoAct(userinfo)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(layout);
