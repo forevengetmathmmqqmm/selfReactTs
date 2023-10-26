@@ -16,7 +16,6 @@ const layout:React.FC<{
   setSelectKeys: (val: string[]) => void
 }> = (props) => {
   const navigate = useNavigate();
-
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -25,13 +24,13 @@ const layout:React.FC<{
     props.id && userDetailApi(props.id).then(res => {
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       props.setUserInfo(res.data)
-      navigate('/webThree/connect');
+      navigate('/setting');
     })
   }, [props.id])
   useEffect(() => {
     let paths = location.pathname.split('/').filter(item => item);
     props.setSelectKeys(paths)
-  }, [])
+  }, [location.pathname])
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">
@@ -45,7 +44,7 @@ const layout:React.FC<{
             </div>
             <SiderMenu />
           </Sider>
-          <Content className="text-black bg-slate-100">
+          <Content className="text-black bg-[#ccc]">
             <Outlet />
           </Content>
         </Layout>

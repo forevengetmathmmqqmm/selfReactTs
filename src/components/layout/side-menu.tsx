@@ -38,9 +38,12 @@ const siderMenu: React.FC<{
     }
   }
   const toUrl: MenuProps['onClick'] = (e) => {
-    navigate('/' + e.keyPath.reverse().join('/'));
-    setSelectedKeys(e.keyPath.reverse());
+    navigate('/' + e.keyPath.reverse().join('/'))
+    setSelectedKeys(e.keyPath)
   };
+  const openChange: MenuProps['onOpenChange'] = (e) => {
+    setSelectedKeys(e)
+  }
   return (
     <div className='w-full'>
       <Menu
@@ -48,6 +51,7 @@ const siderMenu: React.FC<{
         openKeys={ selectedKeys }
         mode="inline"
         onClick={toUrl}
+        onOpenChange={openChange}
         items={menus}
       />
     </div>

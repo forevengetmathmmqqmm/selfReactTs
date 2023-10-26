@@ -44,7 +44,7 @@ const login: React.FC<{
               name="password"
               rules={[{ required: true, message: '请填写密码!' }]}
             >
-              <Input.Password size="large" placeholder="密码 123456" prefix={<UserOutlined />} />
+              <Input.Password size="large" placeholder="密码 asd745281" prefix={<UserOutlined />} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" block htmlType="submit" className="bg-yellow-300">登 陆</Button>

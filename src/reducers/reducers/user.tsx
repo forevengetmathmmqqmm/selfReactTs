@@ -1,6 +1,6 @@
-import { my_cookies } from "../utils";
-import { userReduce } from "../utils/enums";
-import { userInfoInter } from "../utils/inter";
+import { my_cookies } from "../../utils";
+import { userReduce } from "../../utils/enums";
+import { userInfoInter } from "../../utils/inter";
 interface UserStateInter {
   token: string
   userInfo: userInfoInter

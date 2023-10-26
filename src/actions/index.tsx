@@ -1,4 +1,4 @@
-import { appReduce, userReduce } from "../utils/enums"
+import { appReduce, userReduce, web3Reduce } from "../utils/enums"
 import { userInfoInter } from "../utils/inter"
 
 export const userToken = (payload: string) => ({
@@ -17,5 +17,10 @@ export const userIdAct = (payload: string) => ({
 
 export const menuSelectKeys = (payload: string[]) => ({
   type: appReduce.selectedKeys,
+  payload
+})
+// 
+export const web3Wallet = (payload: any) => ({
+  type: web3Reduce.wallet,
   payload
 })

@@ -11,3 +11,7 @@ export enum userReduce {
 export enum appReduce {
   selectedKeys = 'SelectedKeys'
 }
+
+export enum web3Reduce {
+  wallet = 'Wallet'
+}

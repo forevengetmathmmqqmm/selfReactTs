@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { Button, Input, Modal, Tabs, TabsProps } from 'antd';
+import { Button, Descriptions, Input, Modal, Tabs, TabsProps } from 'antd';
 import SelfIcon from '../components/common/self-icon';
 import { connect } from 'react-redux';
 import { userInfoInter } from '../utils/inter';
 import { walletApi } from '../api/user';
+import { web3Wallet } from '../actions';
 const { Wallet } = ethers;
 const WebThree: React.FC<{
   userInfo: userInfoInter
+  setWallet: (wallet: any) => void
+  wallet: any
 }> = (props) => {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeKey, setActiveKey] = useState('login')
   const [password, setPassword] = useState('')
   const [loading , setLoading] = useState(false)
@@ -40,8 +43,12 @@ const WebThree: React.FC<{
     },
   ])
   useEffect(() => {
-
-  }, [])
+    if(props.wallet.address) {
+      setIsModalOpen(false)
+    } else {
+      setIsModalOpen(true)
+    }
+  }, [props.wallet])
   const handleOk = async () => {
     setLoading(true)
     if(activeKey == 'login'){
@@ -54,6 +61,7 @@ const WebThree: React.FC<{
         keystore,
       })
     }
+    props.setWallet(wallet)
     setLoading(false)
     setIsModalOpen(false)
   }
@@ -69,12 +77,28 @@ const WebThree: React.FC<{
         okButtonProps={{ danger: true }}>
         <Tabs activeKey={ activeKey } items={items} onChange={ tanChange }/>
       </Modal>
+      <div className="w-full h-full p-[24px] flex">
+        <div className='w-full h-full bg-white p-[12px] flex flex-col items-center'>
+          <SelfIcon className="text-6xl" type="icon-xiaohuli" />
+          <div className='max-w-[500px] w-full'>
+          <Descriptions column={1}>
+            <Descriptions.Item label="昵 称">{props.userInfo.nickname}</Descriptions.Item>
+            <Descriptions.Item label="钱包地址">{ props.wallet.address }</Descriptions.Item>
+          </Descriptions>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
 const mapStateToProps = (state: any) => {
   return {
-    userInfo: state.user.userInfo
+    userInfo: state.user.userInfo,
+    wallet: state.web3.wallet,
   }
 }
-export default connect(mapStateToProps)(WebThree)
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setWallet: (wallet: any) => dispatch(web3Wallet(wallet)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(WebThree)
