@@ -12,7 +12,7 @@ const WebThree: React.FC<{
   setWallet: (wallet: any) => void
   wallet: any
 }> = (props) => {
-  let provider: ethers.AbstractProvider = new ethers.JsonRpcProvider('http://localhost:8545')
+  let provider: ethers.JsonRpcApiProvider = new ethers.JsonRpcProvider('http://localhost:8545')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeKey, setActiveKey] = useState('login')
   const [password, setPassword] = useState('')
@@ -55,6 +55,15 @@ const WebThree: React.FC<{
       provider.getBlockNumber().then((block) => {
         setBlock(block)
       });
+      const signer = provider.getSigner()
+      signer.then(signer => {
+        signer.getAddress().then(res => {
+          console.log('>>>', res);
+        })
+      })
+      provider.listAccounts().then(accounts => {
+        console.log('>>>accounts', accounts);
+      })
     } else {
       setIsModalOpen(true)
     }
