@@ -24,7 +24,7 @@ const layout:React.FC<{
     props.id && userDetailApi(props.id).then(res => {
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       props.setUserInfo(res.data)
-      navigate('/setting');
+      navigate('/webThree/connect');
     })
   }, [props.id])
   useEffect(() => {

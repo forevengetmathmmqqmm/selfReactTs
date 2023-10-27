@@ -12,10 +12,13 @@ const WebThree: React.FC<{
   setWallet: (wallet: any) => void
   wallet: any
 }> = (props) => {
+  let provider: ethers.AbstractProvider = new ethers.JsonRpcProvider('http://localhost:8545')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeKey, setActiveKey] = useState('login')
   const [password, setPassword] = useState('')
   const [loading , setLoading] = useState(false)
+  const [balance , setBalance] = useState('')
+  const [block , setBlock] = useState(0)
   let wallet
   const onInpChange = (e: any) => {
     setPassword(e.target.value)
@@ -45,6 +48,13 @@ const WebThree: React.FC<{
   useEffect(() => {
     if(props.wallet.address) {
       setIsModalOpen(false)
+      provider.getBalance(props.wallet.address).then((balance) => {
+        const etherString = ethers.formatEther(balance)
+        setBalance(etherString)
+      });
+      provider.getBlockNumber().then((block) => {
+        setBlock(block)
+      });
     } else {
       setIsModalOpen(true)
     }
@@ -84,6 +94,8 @@ const WebThree: React.FC<{
           <Descriptions column={1}>
             <Descriptions.Item label="昵 称">{props.userInfo.nickname}</Descriptions.Item>
             <Descriptions.Item label="钱包地址">{ props.wallet.address }</Descriptions.Item>
+            <Descriptions.Item label="余 额">{ balance }</Descriptions.Item>
+            <Descriptions.Item label="当前区块">{ block }</Descriptions.Item>
           </Descriptions>
           </div>
         </div>
