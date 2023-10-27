@@ -19,6 +19,8 @@ const WebThree: React.FC<{
   const [loading , setLoading] = useState(false)
   const [balance , setBalance] = useState('')
   const [block , setBlock] = useState(0)
+  const [transaction , setTransaction] = useState(0)
+  const [metamask , setMetamask] = useState('')
   let wallet
   const onInpChange = (e: any) => {
     setPassword(e.target.value)
@@ -57,10 +59,21 @@ const WebThree: React.FC<{
       });
       const signer = provider.getSigner()
       signer.then(signer => {
-        signer.getAddress().then(res => {
-          console.log('>>>', res);
-        })
+        setMetamask(signer.address)
       })
+      provider.getTransactionCount(props.wallet.address).then((transactionCount) => {
+        setTransaction(transactionCount)
+      });
+      // provider.estimateGas()
+      provider.getTransaction(props.wallet.address).then(res => {
+
+      })
+    //   provider.getGasPrice().then((gasPrice) => {
+    //     // gasPrice is a BigNumber; convert it to a decimal string
+    //     gasPriceString = gasPrice.toString();
+    
+    //     console.log("Current gas price: " + gasPriceString);
+    // });
       provider.listAccounts().then(accounts => {
         console.log('>>>accounts', accounts);
       })
@@ -103,6 +116,8 @@ const WebThree: React.FC<{
           <Descriptions column={1}>
             <Descriptions.Item label="昵 称">{props.userInfo.nickname}</Descriptions.Item>
             <Descriptions.Item label="钱包地址">{ props.wallet.address }</Descriptions.Item>
+            <Descriptions.Item label="交易数量">{ transaction }</Descriptions.Item>
+            <Descriptions.Item label="metamask 地址">{ metamask }</Descriptions.Item>
             <Descriptions.Item label="余 额">{ balance }</Descriptions.Item>
             <Descriptions.Item label="当前区块">{ block }</Descriptions.Item>
           </Descriptions>
