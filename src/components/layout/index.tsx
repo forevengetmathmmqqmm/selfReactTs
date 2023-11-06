@@ -22,15 +22,15 @@ const layout:React.FC<{
   };
   useEffect(() => {
     props.id && userDetailApi(props.id).then(res => {
-      localStorage.setItem('userInfo', JSON.stringify(res.data));
+      localStorage.setItem('userInfo', JSON.stringify(res.data))
       props.setUserInfo(res.data)
-      navigate('/webThree/connect');
+      navigate(location.pathname == '/' ? '/home' : location.pathname)
     })
   }, [props.id])
   useEffect(() => {
-    let paths = location.pathname.split('/').filter(item => item);
+    let paths = location.pathname.split('/').filter(item => item)
     props.setSelectKeys(paths)
-  }, [location.pathname])
+  }, [])
   return (
     <div className="w-screen h-screen">
       <Layout className="h-full">

@@ -51,3 +51,11 @@ export function walletApi(data: WalletInter) {
     data: data,
   })
 }
+
+// 获取用户列表
+export function userListApi() {
+  return request({
+    url: '/user/list',
+    method: 'GET',
+  })
+}
