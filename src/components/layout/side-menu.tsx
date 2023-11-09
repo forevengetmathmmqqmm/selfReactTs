@@ -42,7 +42,7 @@ const siderMenu: React.FC<{
     setSelectedKeys(e.keyPath)
   };
   const openChange: MenuProps['onOpenChange'] = (e) => {
-    setSelectedKeys(e)
+    setSelectedKeys([e[e.length - 1]])
   }
   return (
     <div className='w-full'>

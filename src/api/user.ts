@@ -6,7 +6,7 @@ interface LoginInter {
 }
 export function loginApi(data: LoginInter) {
   return request({
-    url: '/login',
+    url: '/user/login',
     method: 'POST',
     data: data,
   })
@@ -15,7 +15,7 @@ export function loginApi(data: LoginInter) {
 // 详情
 export function userDetailApi(id:string | number) {
   return request({
-    url: `/user/${id}`,
+    url: `/user/userInfo/${id}`,
     method: 'GET',
   })
 }
@@ -33,7 +33,7 @@ export interface UserInter {
 }
 export function editUserApi(data: UserInter) {
   return request({
-    url: '/user',
+    url: '/user/userInfo',
     method: 'POST',
     data: data,
   })
@@ -46,7 +46,7 @@ export interface WalletInter {
 }
 export function walletApi(data: WalletInter) {
   return request({
-    url: '/wallet',
+    url: '/comment/wallet',
     method: 'POST',
     data: data,
   })
@@ -55,7 +55,7 @@ export function walletApi(data: WalletInter) {
 // 获取用户列表
 export function userListApi() {
   return request({
-    url: '/user/list',
+    url: '/user/userInfo/list',
     method: 'GET',
   })
 }

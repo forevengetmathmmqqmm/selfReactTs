@@ -9,48 +9,50 @@ interface userTypeInter {
 const columns: ColumnsType<userTypeInter> = [{
   title: 'id',
   key: 'id',
-  dataIndex: 'id'
+  fixed: 'left',
+  width: 50,
+  dataIndex: 'id',
 }, {
   title: '昵称',
   key: 'nickname',
+  width: 150,
   dataIndex: 'nickname'
 }, {
   title: '电话',
   key: 'phone',
+  width: 120,
   dataIndex: 'phone'
 }, {
   title: '邮箱',
   key: 'email',
+  width: 200,
   dataIndex: 'email'
 }, {
   title: '头像',
   key: 'avatar',
   dataIndex: 'avatar',
-  render: (val) => <img src={val} className="w-[50px] h-[50px]"/>
+  width: 100,
+  render: (val) => <img src={val} className="w-[50px] h-[50px]"/>,
 },  {
   title: '地址',
   key: 'address',
-  dataIndex: 'address'
+  dataIndex: 'address',
+  width: 200,
 },{
   title: '描述',
   key: 'intro',
-  dataIndex: 'intro'
+  dataIndex: 'intro',
+  width: 180,
 },{
   title: '创建时间',
   key: 'id',
-  dataIndex: 'create_on'
+  dataIndex: 'create_on',
+  width: 180,
 }, {
   title: '修改时间',
   key: 'modified_on',
-  dataIndex: 'modified_on'
-},{
-  title: '操作',
-  fixed: 'right',
-  width: '200px',
-  render: () => <>
-    <Button type="text" className="text-[#50d71e]">修改</Button>
-    <Button type="text" danger>修改</Button>
-  </>,
+  dataIndex: 'modified_on',
+  width: 180,
 }]
 const UserManage:React.FC = () => {
   const [userList, setUserList] = useState<userTypeInter[]>([])
@@ -64,10 +66,9 @@ const UserManage:React.FC = () => {
   return (
     <div className="m-[12px]" >
       <div className="bg-[#fff] mb-[6px] rounded-[6px] flex justify-between">
-        <Button type="text" className="text-[#50d71e]">添加</Button>
-        <Button type="text" icon={<AppstoreAddOutlined />} className="mr-[12px]" />
+        <Button type="text" icon={<AppstoreAddOutlined />} className="mr-[12px] ml-[auto]" />
       </div>
-      <Table columns={columns} dataSource={userList} rowKey="id" />
+      <Table columns={columns} dataSource={userList} rowKey="id" scroll={{ y: 240 }} />
     </div>
   )
 }

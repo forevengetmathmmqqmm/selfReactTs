@@ -60,7 +60,7 @@ const HeaderContent: React.FC<{
 		<>
 			<div className="text-white flex justify-between">
         <div className='flex items-center text-yellow-400'>
-          <SelfIcon className="text-4xl" type={"icon-web3"} />
+          <SelfIcon className="text-4xl text-[#FFD797]" type={"icon-web3"} />
           <span className="text-xl ml-2" >web3 admin</span>
         </div>
 				<Dropdown menu={{ items, onClick }}>

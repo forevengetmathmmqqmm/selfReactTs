@@ -9,6 +9,8 @@ import Personal from "../view/personal";
 import Setting from "../view/setting";
 import SelfIcon from "../components/common/self-icon";
 import UserManage from "../view/user";
+import Musician from "../view/musician/musician";
+import Activity from "../view/activity/activity";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +40,39 @@ const router = createBrowserRouter([
             name: '会员管理',
           },
           element: <UserManage />
+        }]
+      },
+      {
+        path: "musician",
+        handle: {
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          show: true,
+          name: '音乐人管理',
+        },
+        children: [{
+          path: 'musician_manage',
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            show: true,
+            name: '音乐人管理',
+          },
+          element: <Musician />
+        }]
+      },{
+        path: "activity",
+        handle: {
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          show: true,
+          name: '活动管理',
+        },
+        children: [{
+          path: 'activity_manage',
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            show: true,
+            name: '活动管理',
+          },
+          element: <Activity />
         }]
       },
       {
