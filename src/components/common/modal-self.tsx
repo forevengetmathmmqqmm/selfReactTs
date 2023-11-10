@@ -5,7 +5,7 @@ interface PropsInter {
   title: string
   children: any
   changeOpen: (val: boolean) => void
-  modalOk: (val: formInter) => void
+  modalOk: (val: any) => void
 }
 interface ModalInter {
 }

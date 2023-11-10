@@ -1,5 +1,6 @@
 import { message } from "antd"
 import Cookies from "cookies-ts"
+import moment from 'moment'
 const cookies = new Cookies()
 
 export const my_cookies = {
@@ -28,3 +29,15 @@ export const destroyLoading = () => {
   const [messageApi] = message.useMessage();
   messageApi.destroy
 }
+
+export const timeFormate = (val: any, format = 'yyyy-MM-DD') => {
+  return moment(val).format(format)//将时间格式转成yyyy-MM-DD
+}
+
+function name<t>(params:t) {
+  
+}
+
+name(1)
+name('222')
+name({asdf: 'asdf'})

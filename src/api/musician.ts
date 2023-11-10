@@ -34,7 +34,7 @@ export function editMusicianApi(data: MusicianInter) {
 }
 
 // 删除
-export function dellMusicianApi(id: number) {
+export function delMusicianApi(id: number) {
   return request({
     url: '/musician/del/'+id,
     method: 'DELETE',

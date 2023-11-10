@@ -26,7 +26,7 @@ export default class OptionsMusician extends React.Component<PropsInter, OptMusi
     if(newVal.options != Options.add) {
       this.getDetail(newVal.id as number)
     } else {
-      this.state.form.current?.setFieldsValue({})
+      this.state.form.current?.resetFields()
     }
   }
   getDetail = async (id: number) => {

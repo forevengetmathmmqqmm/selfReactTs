@@ -5,7 +5,7 @@ import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/i
 import ModalSelf from "../../components/common/modal-self"
 import OptionsMusician from "./components/options"
 import { Options, OptionsMap, AuditStatus, AuditStatusMap } from "../../utils/enums"
-import { getMusicianListApi, dellMusicianApi } from "../../api/musician"
+import { getMusicianListApi, delMusicianApi } from "../../api/musician"
 import SelfIcon from "../../components/common/self-icon"
 interface MusicianInter {
   isModalOpen: boolean
@@ -110,7 +110,7 @@ export default class Musician extends React.Component<any, MusicianInter> {
     this.getList()
   }
   delMusician = async (column: any, index: number) => {
-    await dellMusicianApi(column.id)
+    await delMusicianApi(column.id)
     let list = [...this.state.dataList]
     list.splice(index, 1)
     this.setState({

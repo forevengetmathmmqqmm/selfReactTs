@@ -1,16 +1,16 @@
-import { RouteObject, createBrowserRouter } from "react-router-dom";
-import { AppstoreOutlined, ContainerOutlined } from '@ant-design/icons';
-import Layout from '../components/layout';
-import Home from "../view/home";
-import WebThree from "../view/webThree";
-import Login from "../view/login";
-import PrivateRoute from "../components/common/private-route";
-import Personal from "../view/personal";
-import Setting from "../view/setting";
-import SelfIcon from "../components/common/self-icon";
-import UserManage from "../view/user";
-import Musician from "../view/musician/musician";
-import Activity from "../view/activity/activity";
+import { RouteObject, createBrowserRouter } from "react-router-dom"
+import { AppstoreOutlined, ContainerOutlined } from '@ant-design/icons'
+import Layout from '../components/layout'
+import Home from "../view/home"
+import WebThree from "../view/webThree"
+import Login from "../view/login"
+import PrivateRoute from "../components/common/private-route"
+import Personal from "../view/personal"
+import Setting from "../view/setting"
+import SelfIcon from "../components/common/self-icon"
+import UserManage from "../view/user"
+import Musician from "../view/musician/musician"
+import Activity from "../view/activity/activity"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,14 +45,14 @@ const router = createBrowserRouter([
       {
         path: "musician",
         handle: {
-          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-music-player"} />,
           show: true,
           name: '音乐人管理',
         },
         children: [{
           path: 'musician_manage',
           handle: {
-            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-music-player"} />,
             show: true,
             name: '音乐人管理',
           },
@@ -61,21 +61,36 @@ const router = createBrowserRouter([
       },{
         path: "activity",
         handle: {
-          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-activity-manage"} />,
           show: true,
           name: '活动管理',
         },
         children: [{
           path: 'activity_manage',
           handle: {
-            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-activity-manage"} />,
             show: true,
             name: '活动管理',
           },
           element: <Activity />
         }]
-      },
-      {
+      },{
+        path: "banner",
+        handle: {
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-banner-manage"} />,
+          show: true,
+          name: '轮播图管理',
+        },
+        children: [{
+          path: 'banner_manage',
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-banner-manage"} />,
+            show: true,
+            name: '轮播图管理',
+          },
+          element: <Activity />
+        }]
+      },{
         path: "webThree",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-web3"} />,
