@@ -1,5 +1,5 @@
 import request from "../utils/request";
-// 登录、注册
+// 登录
 interface LoginInter {
   nickname: string
   password: string
@@ -9,6 +9,14 @@ export function loginApi(data: LoginInter) {
     url: '/user/login',
     method: 'POST',
     data: data,
+  })
+}
+
+// 登出
+export function logoutApi() {
+  return request({
+    url: '/user/logout',
+    method: 'POST',
   })
 }
 

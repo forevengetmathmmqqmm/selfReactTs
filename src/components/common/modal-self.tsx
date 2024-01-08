@@ -7,12 +7,10 @@ interface PropsInter {
   changeOpen: (val: boolean) => void
   modalOk: (val: any) => void
 }
-interface ModalInter {
-}
 interface formInter {
   [key: string]: string | number
 }
-export default class ModalSelf extends React.Component<PropsInter, ModalInter> {
+export default class ModalSelf extends React.Component<PropsInter> {
   constructor(props: PropsInter | Readonly<PropsInter>){
     super(props)
     this.state = {

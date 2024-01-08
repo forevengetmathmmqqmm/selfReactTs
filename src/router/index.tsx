@@ -11,6 +11,7 @@ import SelfIcon from "../components/common/self-icon"
 import UserManage from "../view/user"
 import Musician from "../view/musician/musician"
 import Activity from "../view/activity/activity"
+import Role from "../view/role"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,23 @@ const router = createBrowserRouter([
           show: true,
           name: '首页',
         },
+      },
+      {
+        path: "role",
+        handle: {
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          show: true,
+          name: '角色管理',
+        },
+        children: [{
+          path: 'role_manage',
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            show: true,
+            name: '会员管理',
+          },
+          element: <Role />
+        }]
       },
       {
         path: "user",

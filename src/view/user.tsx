@@ -1,8 +1,11 @@
-import { Button, Table } from "antd"
+import { Button, Popconfirm, Table } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { useEffect, useState } from "react"
 import { userListApi } from "../api/user"
-import { AppstoreAddOutlined } from '@ant-design/icons'
+import SelfIcon from "../components/common/self-icon"
+import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { Options } from "../utils/enums"
+
 interface userTypeInter {
   [key: string] : string
 }
@@ -53,7 +56,30 @@ const columns: ColumnsType<userTypeInter> = [{
   key: 'modified_on',
   dataIndex: 'modified_on',
   width: 180,
+},{
+  title: '操作',
+  fixed: 'right',
+  width: 250,
+  render: (val, _, index) => (<>
+    <Button type="text" size="small" icon={<EditOutlined />}  className="text-[#57bac9]" onClick={() => optionMusician(Options.edit, val)}>编辑</Button>
+    <Popconfirm
+      title="删除"
+      description="请确认是否删除?"
+      onConfirm={() => delMusician(val, index)}
+      okText="确认"
+      cancelText="取消"
+      okButtonProps={{ className: 'bg-[#50d71e]' }}
+    >
+      <Button type="text" size="small" icon={<DeleteOutlined />}  danger>删除</Button>
+    </Popconfirm>
+  </>)
 }]
+const optionMusician = (type: Options, item?: any) => {
+  
+}
+const delMusician = async (column: any, index: number) => {
+    
+}
 const UserManage:React.FC = () => {
   const [userList, setUserList] = useState<userTypeInter[]>([])
   useEffect(() => {

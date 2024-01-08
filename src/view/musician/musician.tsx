@@ -105,7 +105,6 @@ export default class Musician extends React.Component<any, MusicianInter> {
       optRef: React.createRef<any>()
     }
   }
-
   componentDidMount(): void {
     this.getList()
   }

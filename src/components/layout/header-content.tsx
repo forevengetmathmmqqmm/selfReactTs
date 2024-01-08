@@ -8,6 +8,8 @@ import { menuSelectKeys, userToken } from '../../actions';
 import SelfIcon from '../common/self-icon';
 import { userInfoInter } from '../../utils/inter';
 import { useEffect, useState } from 'react';
+import { logoutApi } from '../../api/user';
+import { message } from 'antd';
 const items: MenuProps['items'] = [
   {
     key: headerKeys.personal,
@@ -38,6 +40,7 @@ const HeaderContent: React.FC<{
   setToken: () => void
   setSelectKeys: (val: string[]) => void
 }> = (props) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     avatar: '',
@@ -46,11 +49,15 @@ const HeaderContent: React.FC<{
   useEffect(() => {
     setUserInfo(props.userInfo)
   }, [props.userInfo])
-  const onClick: MenuProps['onClick'] = ({ key }) => {
+
+  const onClick: MenuProps['onClick'] = async ({ key }) => {
     if (key == headerKeys.logout) {
-      navigate("/login");
-      localStorage.removeItem('token');
-      props.setToken();
+      await logoutApi()
+      messageApi.success('退出登录成功', 1.5).then(_ => {
+        navigate("/login");
+        localStorage.removeItem('token');
+        props.setToken();
+      })
     } else{
       navigate(`/${key}`);
       props.setSelectKeys([key])
@@ -58,6 +65,7 @@ const HeaderContent: React.FC<{
   };
 	return (
 		<>
+      { contextHolder }
 			<div className="text-white flex justify-between">
         <div className='flex items-center text-yellow-400'>
           <SelfIcon className="text-4xl text-[#FFD797]" type={"icon-web3"} />
