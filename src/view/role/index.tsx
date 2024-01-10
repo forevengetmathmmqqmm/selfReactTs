@@ -1,11 +1,10 @@
-import { Button, Popconfirm, message } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
-import React from "react";
-import { Options, OptionsMap } from "../../utils/enums";
-import { roleListApi } from "../../api/role";
-import ModalSelf from "../../components/common/modal-self";
-import OptionsRole from "./components/options";
-import SelfIcon from "../../components/common/self-icon";
+import { Button, Popconfirm, message } from "antd"
+import Table, { ColumnsType } from "antd/es/table"
+import React from "react"
+import { Options, OptionsMap } from "../../utils/enums"
+import { roleListApi } from "../../api/role"
+import ModalSelf from "../../components/common/modal-self"
+import OptionsRole from "./components/options"
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 interface RoleStatus {
@@ -92,7 +91,6 @@ export default class Role extends React.Component<any, RoleStatus>{
       list = [...this.state.dataList]
       list.splice(index, 1, val)
     }
-    console.log('>>>>>>', list);
     this.setState({
       dataList: list
     })

@@ -11,12 +11,6 @@ interface formInter {
   [key: string]: string | number
 }
 export default class ModalSelf extends React.Component<PropsInter> {
-  constructor(props: PropsInter | Readonly<PropsInter>){
-    super(props)
-    this.state = {
-      isModalOpen: props.isModalOpen
-    }
-  }
   handleOk = () => {
     this.props.children.ref.current.submit((data: formInter) => {
       this.props.changeOpen(false)

@@ -16,7 +16,7 @@ const setting: React.FC<{
   const [imgUrl, setImgUrl] = useState('')
   const [upConfig, _] = useState<UploadProps>({
     name: 'file',
-    action: import.meta.env.VITE_BASE_URL + '/uploads',
+    action: import.meta.env.VITE_BASE_URL + '/comment/uploads',
     headers: {
       authorization: props.token,
     },

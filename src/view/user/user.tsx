@@ -1,11 +1,11 @@
 import { Button, Popconfirm, Table } from "antd"
 import { ColumnsType } from "antd/es/table"
-import { useEffect, useState } from "react"
-import { userListApi } from "../api/user"
-import SelfIcon from "../components/common/self-icon"
+import { forwardRef, useEffect, useRef, useState } from "react"
+import { userListApi } from "../../api/user"
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Options } from "../utils/enums"
-
+import { Options, OptionsMap } from "../../utils/enums"
+import ModalSelf from "../../components/common/modal-self"
+import OptionsUser from "./components/options"
 interface userTypeInter {
   [key: string] : string
 }
@@ -82,6 +82,10 @@ const delMusician = async (column: any, index: number) => {
 }
 const UserManage:React.FC = () => {
   const [userList, setUserList] = useState<userTypeInter[]>([])
+  const [title, setTitle] = useState<string>('')
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [options, setOptions] = useState<Options>(Options.add)
+  const optionsRef = useRef<any>()
   useEffect(() => {
     getList()
   }, [])
@@ -89,12 +93,25 @@ const UserManage:React.FC = () => {
     const res = await userListApi()
     setUserList(res.data.list)
   }
+  const optionUser = (key: Options) => {
+    setTitle(OptionsMap.get(key) as string)
+    setOptions(key)
+    setIsModalOpen(true)
+  }
+  const modalOk = () => {
+
+  }
   return (
     <div className="m-[12px]" >
       <div className="bg-[#fff] mb-[6px] rounded-[6px] flex justify-between">
+        <Button type="text" className="text-[#50d71e]" onClick={ () => optionUser(Options.add) }>添加</Button>
         <Button type="text" icon={<AppstoreAddOutlined />} className="mr-[12px] ml-[auto]" />
       </div>
       <Table columns={columns} dataSource={userList} rowKey="id" scroll={{ y: 240 }} />
+      <OptionsUser options={ options } ref={ optionsRef }/>
+      {/* <ModalSelf isModalOpen={isModalOpen} title={title}  modalOk={modalOk} changeOpen={(val) => setIsModalOpen(val)}>
+        <OptionsUser options={ options } ref={ optionsRef }/>
+      </ModalSelf> */}
     </div>
   )
 }
