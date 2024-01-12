@@ -21,3 +21,11 @@ export function roleListApi() {
     method: 'GET',
   })
 }
+
+// 删除
+export function roleDelApi(id:string | number) {
+  return request({
+    url: `/role/del/${id}`,
+    method: 'DELETE',
+  })
+}

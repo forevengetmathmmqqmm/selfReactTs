@@ -2,7 +2,7 @@ import { Button, Popconfirm, message } from "antd"
 import Table, { ColumnsType } from "antd/es/table"
 import React from "react"
 import { Options, OptionsMap } from "../../utils/enums"
-import { roleListApi } from "../../api/role"
+import { roleDelApi, roleListApi } from "../../api/role"
 import ModalSelf from "../../components/common/modal-self"
 import OptionsRole from "./components/options"
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
@@ -28,7 +28,7 @@ export default class Role extends React.Component<any, RoleStatus>{
       }, {
         title: '标题',
         dataIndex: 'title',
-        width: 120,
+        width: 150,
       }, {
         title: '描述',
         dataIndex: 'desc',
@@ -46,7 +46,7 @@ export default class Role extends React.Component<any, RoleStatus>{
           <Popconfirm
             title="删除"
             description="请确认是否删除?"
-            onConfirm={() => this.delMusician(val, index)}
+            onConfirm={() => this.delRole(val, index)}
             okText="确认"
             cancelText="取消"
             okButtonProps={{ className: 'bg-[#50d71e]' }}
@@ -70,8 +70,13 @@ export default class Role extends React.Component<any, RoleStatus>{
       dataList: res.data.list
     })
   }
-  delMusician = async (column: any, index: number) => {
-    
+  delRole = async (column: any, index: number) => {
+    await roleDelApi(column.id)
+    let list = [...this.state.dataList]
+    list.splice(index, 1)
+    this.setState({
+      dataList: list
+    })
     message.success('删除成功！！！')
   }
   optionMusician(type: Options, item?: any) {

@@ -1,7 +1,6 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom"
 import { AppstoreOutlined, ContainerOutlined } from '@ant-design/icons'
 import Layout from '../components/layout'
-import Home from "../view/home"
 import WebThree from "../view/webThree"
 import Login from "../view/login"
 import PrivateRoute from "../components/common/private-route"
@@ -12,6 +11,11 @@ import UserManage from "../view/user/user"
 import Musician from "../view/musician/musician"
 import Activity from "../view/activity/activity"
 import Role from "../view/role"
+import { lazy } from "react"
+const lazyLoad = (url: string) => {
+  const El = lazy(() => import(`../view/${url}`))
+  return <El />
+}
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <Home />,
+        element: lazyLoad('home'),
         handle: {
           icon: <AppstoreOutlined />,
           show: true,
@@ -168,4 +172,4 @@ const router = createBrowserRouter([
   }
 ] as RouteObject[]);
 
-export  default router;
+export default router;

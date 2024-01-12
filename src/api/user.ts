@@ -28,25 +28,44 @@ export function userDetailApi(id:string | number) {
   })
 }
 
+// 删除
+export function userDelApi(id:string | number) {
+  return request({
+    url: `/user/userInfo/${id}`,
+    method: 'DELETE',
+  })
+}
+
 // 修改用户
-export interface UserInter {
+export interface UserInter extends AddUserInter {
   id: number
-  nickname: string
-  phone: string
-  email: string
-  wallet_address: string
-  address: string
-  intro: string
-  avatar: string
 }
 export function editUserApi(data: UserInter) {
   return request({
-    url: '/user/userInfo',
+    url: '/user/userInfo/edit',
     method: 'POST',
     data: data,
   })
 }
 
+// 添加用户
+export interface AddUserInter {
+  nickname: string
+  phone: string
+  email: string
+  address: string
+  intro: string
+  avatar: string
+  role_id: number
+  password: string
+}
+export function addUserApi(data: AddUserInter) {
+  return request({
+    url: '/user/userInfo/add',
+    method: 'POST',
+    data: data,
+  })
+}
 // 创建钱包
 export interface WalletInter {
   wallet_address: string
