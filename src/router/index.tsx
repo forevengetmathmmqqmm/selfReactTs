@@ -31,6 +31,23 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "router",
+        handle: {
+          icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+          show: true,
+          name: '路由管理',
+        },
+        children: [{
+          path: 'parent/router',
+          element: lazyLoad('routers/index'),
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
+            show: true,
+            name: '父级路由管理',
+          },
+        }]
+      },
+      {
         path: "role",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
