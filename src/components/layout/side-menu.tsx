@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { startTransition, useEffect, useState } from 'react';
 import router from '../../router';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
@@ -38,8 +38,10 @@ const siderMenu: React.FC<{
     }
   }
   const toUrl: MenuProps['onClick'] = (e) => {
-    navigate('/' + e.keyPath.reverse().join('/'))
-    setSelectedKeys(e.keyPath)
+    startTransition(() => {
+      navigate('/' + e.keyPath.reverse().join('/'))
+      setSelectedKeys(e.keyPath)
+    })
   };
   const openChange: MenuProps['onOpenChange'] = (e) => {
     setSelectedKeys([e[e.length - 1]])

@@ -42,7 +42,7 @@ export default class Role extends React.Component<any, RoleStatus>{
         fixed: 'right',
         width: 250,
         render: (val, _, index) => (<>
-          <Button type="text" size="small" icon={<EditOutlined />}  className="text-[#57bac9]" onClick={() => this.optionMusician(Options.edit, val)}>编辑</Button>
+          <Button type="text" size="small" icon={<EditOutlined />}  className="text-[#57bac9]" onClick={() => this.optionRole(Options.edit, val)}>编辑</Button>
           <Popconfirm
             title="删除"
             description="请确认是否删除?"
@@ -79,7 +79,7 @@ export default class Role extends React.Component<any, RoleStatus>{
     })
     message.success('删除成功！！！')
   }
-  optionMusician(type: Options, item?: any) {
+  optionRole(type: Options, item?: any) {
     this.setState({
       options: type,
       isModalOpen: true,
@@ -105,7 +105,7 @@ export default class Role extends React.Component<any, RoleStatus>{
       <div className="m-[12px]" >
         <div className="bg-[#fff] mb-[6px] rounded-[6px] flex justify-between">
           <Button type="text" className="text-[#50d71e]"
-            onClick={() => this.optionMusician(Options.add)}>添加</Button>
+            onClick={() => this.optionRole(Options.add)}>添加</Button>
           <Button type="text" icon={<AppstoreAddOutlined />} className="mr-[12px] ml-[auto]" />
         </div>
         <Table columns={this.state.columns} dataSource={this.state.dataList} scroll={{ x: 300 }} rowKey="id" />
