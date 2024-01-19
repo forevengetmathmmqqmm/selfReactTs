@@ -29,8 +29,7 @@ const router = createBrowserRouter([
           show: true,
           name: '首页',
         },
-      },
-      {
+      }, {
         path: "router",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-router-manage"} />,
@@ -38,16 +37,23 @@ const router = createBrowserRouter([
           name: '路由管理',
         },
         children: [{
-          path: 'parent-router',
+          path: 'router-manage',
           element: lazyLoad('routers/index'),
+          handle: {
+            icon: <SelfIcon style={{color: '#000'}} type={"icon-router-manage"} />,
+            show: true,
+            name: '路由管理',
+          },
+        }, {
+          path: 'parent-router',
+          element: lazyLoad('routers/parent-router'),
           handle: {
             icon: <SelfIcon style={{color: '#000'}} type={"icon-router-manage"} />,
             show: true,
             name: '父级路由管理',
           },
         }]
-      },
-      {
+      }, {
         path: "role",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
@@ -63,8 +69,7 @@ const router = createBrowserRouter([
           },
           element: <Role />
         }]
-      },
-      {
+      }, {
         path: "user",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-user-manage"} />,
@@ -80,8 +85,7 @@ const router = createBrowserRouter([
           },
           element: <UserManage />
         }]
-      },
-      {
+      }, {
         path: "musician",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-music-player"} />,
@@ -97,7 +101,7 @@ const router = createBrowserRouter([
           },
           element: <Musician />
         }]
-      },{
+      }, {
         path: "activity",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-activity-manage"} />,
@@ -113,7 +117,7 @@ const router = createBrowserRouter([
           },
           element: <Activity />
         }]
-      },{
+      }, {
         path: "banner",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-banner-manage"} />,
@@ -129,7 +133,7 @@ const router = createBrowserRouter([
           },
           element: <Activity />
         }]
-      },{
+      }, {
         path: "webThree",
         handle: {
           icon: <SelfIcon style={{color: '#000'}} type={"icon-web3"} />,
@@ -145,8 +149,7 @@ const router = createBrowserRouter([
             name: 'metamask',
           },
         }]
-      },
-      {
+      }, {
         path: "pigsty",
         handle: {
           icon: <SelfIcon type={"icon-pigsty"} />,
@@ -162,8 +165,7 @@ const router = createBrowserRouter([
             name: '链接',
           },
         }]
-      },
-      {
+      }, {
         path: "personal",
         element: <Personal />,
         handle: {
@@ -171,8 +173,7 @@ const router = createBrowserRouter([
           show: true,
           name: '个人中心',
         },
-      },
-      {
+      }, {
         path: "setting",
         element: <Setting />,
         handle: {

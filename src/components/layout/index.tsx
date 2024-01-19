@@ -44,7 +44,7 @@ const layout:React.FC<{
             </div>
             <SiderMenu />
           </Sider>
-          <Content className="text-black bg-[#ccc]">
+          <Content className="text-black bg-[#ccc] overflow-y-scroll">
             <Outlet />
           </Content>
         </Layout>

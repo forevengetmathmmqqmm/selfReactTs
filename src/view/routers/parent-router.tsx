@@ -4,26 +4,26 @@ import { Button, Popconfirm, Table, message } from "antd";
 import React from "react";
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ColumnsType } from "antd/es/table";
-import { Access, delAccessApi, getAccessList } from "@/api/access";
-import OptionsModal from "./components/options";
+import { ParentAccess, delAccessParentApi, getParentAccessList } from "@/api/access";
+import OptionsModal from "./components/parent-options";
 interface propsInter {}
 interface stateInter {
-  columns: ColumnsType<Access>
-  dataList: Access[]
+  columns: ColumnsType<ParentAccess>
+  dataList: ParentAccess[]
   title: string
   options: Options
   isModalOpen: boolean
   optRef: React.RefObject<any>
-  optionColumn: Access
-  colOptions: Access
+  optionColumn: ParentAccess
+  colOptions: ParentAccess
 }
 
 export default class Routers extends React.Component<propsInter, stateInter> {
   constructor(props: propsInter){
     super(props)
     this.state = {
-      colOptions: {} as Access,
-      optionColumn: {} as Access,
+      colOptions: {} as ParentAccess,
+      optionColumn: {} as ParentAccess,
       columns: [{
         title: 'id',
         dataIndex: 'id',
@@ -45,14 +45,6 @@ export default class Routers extends React.Component<propsInter, stateInter> {
         title: '组价路径',
         dataIndex: 'el_path',
         width: 120,
-      },{
-        title: '父级路由',
-        dataIndex: 'parent_router_id',
-        width: 120,
-      },{
-        title: '角色',
-        dataIndex: 'role_id',
-        width: 220,
       },{
         title: '是否显示',
         dataIndex: 'show',
@@ -78,7 +70,7 @@ export default class Routers extends React.Component<propsInter, stateInter> {
           </Popconfirm>
         </>)
       }],
-      dataList: [] as Access[],
+      dataList: [] as ParentAccess[],
       title: OptionsMap.get(Options.add) as string,
       isModalOpen: false,
       options: Options.add,
@@ -89,16 +81,16 @@ export default class Routers extends React.Component<propsInter, stateInter> {
   componentDidMount(): void {
     this.getList()
   }
-  optionRouter(key: Options, item?: Access){
+  optionRouter(key: Options, item?: ParentAccess){
     this.setState({
       options: key,
       title: OptionsMap.get(key) as string,
       isModalOpen: true,
-      colOptions: item as Access,
+      colOptions: item as ParentAccess,
     })
   }
-  async delRouter(item: Access, index: number){
-    await delAccessApi(item.id as number)
+  async delRouter(item: ParentAccess, index: number){
+    await delAccessParentApi(item.id as number)
     message.success('删除成功')
     let list = [...this.state.dataList]
     list.splice(index, 1)
@@ -107,13 +99,13 @@ export default class Routers extends React.Component<propsInter, stateInter> {
     })
   }
   async getList(){
-    const res = await getAccessList()
+    const res = await getParentAccessList()
     this.setState({
       dataList: res.data.list
     })
   }
-  modalOk(val: Access){
-    let list = [] as Access[]
+  modalOk(val: ParentAccess){
+    let list = [] as ParentAccess[]
     if(this.state.options == Options.add) {
       list = [val, ...this.state.dataList]
     } else {
@@ -129,8 +121,7 @@ export default class Routers extends React.Component<propsInter, stateInter> {
     return <>
       <div className="m-[12px]" >
         <div className="bg-[#fff] mb-[6px] rounded-[6px] flex justify-between">
-          <Button type="text" className="text-[#50d71e]"
-            onClick={() => this.optionRouter(Options.add)}>添加</Button>
+          <Button type="text" className="text-[#50d71e]" onClick={() => this.optionRouter(Options.add)}>添加</Button>
           <Button type="text" icon={<AppstoreAddOutlined />} className="mr-[12px] ml-[auto]" />
         </div>
         <Table columns={this.state.columns} dataSource={this.state.dataList} scroll={{ x: 300 }} rowKey="id" />
