@@ -1,4 +1,4 @@
-import { Access, addAccessApi, getParentAccessList, detailAccessApi, editAccessApi } from "@/api/access";
+import { Access, addAccessApi, getParentAccessListApi, detailAccessApi, editAccessApi } from "@/api/access";
 import { RoleInter, roleListApi } from "@/api/role";
 import { Options } from "@/utils/enums";
 import { Form, FormInstance, Input, Select, Switch } from "antd";
@@ -36,7 +36,7 @@ export default class OptionsModal extends React.Component<propsInter, stateInter
     })
   }
   async getParentAccessList(){
-    const res = await getParentAccessList()
+    const res = await getParentAccessListApi()
     this.setState({
       parentPouterList: res.data.list
     })

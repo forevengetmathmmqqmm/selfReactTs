@@ -33,11 +33,3 @@ export const destroyLoading = () => {
 export const timeFormate = (val: any, format = 'yyyy-MM-DD') => {
   return moment(val).format(format)//将时间格式转成yyyy-MM-DD
 }
-
-function name<t>(params:t) {
-  
-}
-
-name(1)
-name('222')
-name({asdf: 'asdf'})

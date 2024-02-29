@@ -4,7 +4,7 @@ const cookies = new Cookies()
 const source = axios.CancelToken.source()
 const request = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: 1000,
+  timeout: 50000,
   cancelToken: source.token,
 })
 // 添加请求拦截器

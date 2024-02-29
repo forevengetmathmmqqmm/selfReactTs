@@ -4,7 +4,8 @@ import { Button, Popconfirm, Table, message } from "antd";
 import React from "react";
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ColumnsType } from "antd/es/table";
-import { Access, delAccessApi, getAccessList } from "@/api/access";
+import { Access, delAccessApi, getAccessList, getParentAccessListApi } from "@/api/access";
+import { RoleInter, roleListApi } from "@/api/role";
 import OptionsModal from "./components/options";
 interface propsInter {}
 interface stateInter {
@@ -16,6 +17,8 @@ interface stateInter {
   optRef: React.RefObject<any>
   optionColumn: Access
   colOptions: Access
+  parentAccess: Access[]
+  roleList: RoleInter[]
 }
 
 export default class Routers extends React.Component<propsInter, stateInter> {
@@ -32,37 +35,49 @@ export default class Routers extends React.Component<propsInter, stateInter> {
       },{
         title: '名称',
         dataIndex: 'name',
-        width: 120,
+        width: 80,
+        ellipsis: true,
       },{
         title: '路径',
         dataIndex: 'path',
-        width: 120,
+        width: 80,
+        ellipsis: true,
       },{
         title: '图标',
         dataIndex: 'icon',
-        width: 120,
+        width: 80,
+        ellipsis: true,
       },{
         title: '组价路径',
         dataIndex: 'el_path',
-        width: 120,
+        width: 80,
+        ellipsis: true,
       },{
         title: '父级路由',
         dataIndex: 'parent_router_id',
-        width: 120,
+        width: 80,
+        ellipsis: true,
+        render: (val) => (<>{ this.state.parentAccess.find(item => item.id == val)?.name }</>)
       },{
         title: '角色',
-        dataIndex: 'role_id',
-        width: 220,
+        dataIndex: 'role_ids',
+        width: 80,
+        ellipsis: true,
+        render: (val) => (<>{ val.map((valItem: number) => {
+          let roleData = this.state.roleList.find(item => item.id == valItem)
+          return roleData?.title
+        }).join(',')}</>)
       },{
         title: '是否显示',
         dataIndex: 'show',
         width: 80,
+        ellipsis: true,
         render: (val) => (<>
           { val ? '是' : '否'}
         </>)
       }, {
         title: '操作',
-        width: 160,
+        width: 220,
         fixed: 'right',
         render: (val, _, index) => (<>
           <Button type="text" size="small" icon={<EditOutlined />}  className="text-[#57bac9]" onClick={() => this.optionRouter(Options.edit, val)}>编辑</Button>
@@ -79,11 +94,15 @@ export default class Routers extends React.Component<propsInter, stateInter> {
         </>)
       }],
       dataList: [] as Access[],
+      roleList: [],
       title: OptionsMap.get(Options.add) as string,
       isModalOpen: false,
       options: Options.add,
       optRef: React.createRef<any>(),
+      parentAccess: [],
     }
+    this.getRoleList()
+    this.getParentAccessList()
     this.modalOk = this.modalOk.bind(this)
   }
   componentDidMount(): void {
@@ -110,6 +129,18 @@ export default class Routers extends React.Component<propsInter, stateInter> {
     const res = await getAccessList()
     this.setState({
       dataList: res.data.list
+    })
+  }
+  async getRoleList(){
+    const res = await roleListApi()
+    this.setState({
+      roleList: res.data.list
+    })
+  }
+  async getParentAccessList(){
+    const res = await getParentAccessListApi()
+    this.setState({
+      parentAccess: res.data.list
     })
   }
   modalOk(val: Access){

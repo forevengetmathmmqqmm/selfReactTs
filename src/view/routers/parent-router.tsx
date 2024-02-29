@@ -4,7 +4,7 @@ import { Button, Popconfirm, Table, message } from "antd";
 import React from "react";
 import { AppstoreAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { ColumnsType } from "antd/es/table";
-import { ParentAccess, delAccessParentApi, getParentAccessList } from "@/api/access";
+import { ParentAccess, delAccessParentApi, getParentAccessListApi } from "@/api/access";
 import OptionsModal from "./components/parent-options";
 interface propsInter {}
 interface stateInter {
@@ -99,7 +99,7 @@ export default class Routers extends React.Component<propsInter, stateInter> {
     })
   }
   async getList(){
-    const res = await getParentAccessList()
+    const res = await getParentAccessListApi()
     this.setState({
       dataList: res.data.list
     })

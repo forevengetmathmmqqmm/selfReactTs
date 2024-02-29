@@ -1,6 +1,6 @@
 import request from "@/utils/request"
 
-export const getParentAccessList = () => {
+export const getParentAccessListApi = () => {
   return request({
     url: '/access/parent/list',
     method: 'GET',
