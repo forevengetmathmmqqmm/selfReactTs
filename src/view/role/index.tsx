@@ -62,6 +62,8 @@ export default class Role extends React.Component<any, RoleStatus>{
       optionColumn: {},
       optRef: React.createRef<any>()
     }
+  }
+  componentDidMount(): void {
     this.getList();
   }
   async getList(){

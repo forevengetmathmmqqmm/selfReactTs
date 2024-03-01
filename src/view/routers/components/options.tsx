@@ -82,7 +82,7 @@ export default class OptionsModal extends React.Component<propsInter, stateInter
         <Form.Item label="父级路由" name="parent_router_id" rules={[{ required: true, message: '请选择父级路由' }]}>
           <Select allowClear options={this.state.parentPouterList} fieldNames={{label: 'name', value: 'id'}}/>
         </Form.Item>
-        <Form.Item label="角色" name="role_id" rules={[{ required: true, message: '请选择角色' }]}>
+        <Form.Item label="角色" name="role_ids" rules={[{ required: true, message: '请选择角色' }]}>
           <Select mode="multiple" allowClear options={this.state.roleList} fieldNames={{label: 'title', value: 'id'}}/>
         </Form.Item>
         <Form.Item label="名 称" name="name" rules={[{ required: true, message: '请填写名称' }]}>

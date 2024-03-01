@@ -1,42 +1,54 @@
-import React, { startTransition, useEffect, useState } from 'react';
-import router from '../../router';
+import React, { startTransition, useEffect, useState } from 'react'
+import SelfIcon from "@/components/common/self-icon"
+import { AppstoreOutlined } from '@ant-design/icons'
+import { routersListApi } from "../../api/user";
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { RouteObject, useNavigate } from 'react-router-dom';
-import { SubMenuType } from 'antd/es/menu/hooks/useItems';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 type MenuItem = Required<MenuProps>['items'][number];
-
+interface Access {
+  path: string
+  name: string
+  icon: string
+  children_list: Access[]
+}
 const siderMenu: React.FC<{
   selectedKeys: string[]
 }> = (props) => {
   const [menus, setMenus] = useState<MenuItem[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const navigate = useNavigate();
-  let routers: MenuItem[] = [];
   useEffect(() => {
-    getItems(router.routes[0].children as RouteObject[], routers);
-    setMenus(routers);
+    routersListApi().then(res => {
+      let list = res.data || []
+      list = list.map((item: Access) => {
+        let menuItem: MenuItem = {
+          key: item.path,
+          label: item.name,
+          icon: <SelfIcon style={{color: '#000'}} type={item.icon}/>,
+          children: item.children_list.map((item: Access) => {
+            let childrenItem: MenuItem = {
+              key: item.path,
+              label: item.name,
+              icon: <SelfIcon style={{color: '#000'}} type={item.icon}/>,
+            }
+            return childrenItem
+          })
+        }
+        return menuItem;
+      })
+      list.unshift({
+        key: "home",
+        label: '首页',
+        icon: <AppstoreOutlined />,
+      })
+      setMenus(list);
+    })
   }, [])
   useEffect(() => { 
     setSelectedKeys(props.selectedKeys);
   }, [props.selectedKeys])
-  function getItems(arr: RouteObject[], routers: MenuItem[]) {
-    for (let index = 0; index < arr.length; index++) {
-      let item = arr[index];
-      if(item.handle.show) {
-        routers[index] = {
-          label: item.handle.name,
-          icon: item.handle.icon,
-          key: item.path,
-        } as MenuItem
-        if(item.children?.length) {
-          (routers[index] as SubMenuType).children = [] as MenuItem[];
-          getItems(item.children, (routers[index] as SubMenuType).children);
-        }
-      }
-    }
-  }
   const toUrl: MenuProps['onClick'] = (e) => {
     startTransition(() => {
       navigate('/' + e.keyPath.reverse().join('/'))

@@ -11,7 +11,6 @@ const app = (state = appState, action: { type: appReduce, payload: any }) => {
         selectedKeys: action.payload
       }
       break;
-  
     default:
       return {
         ...state

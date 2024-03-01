@@ -101,11 +101,11 @@ export default class Routers extends React.Component<propsInter, stateInter> {
       optRef: React.createRef<any>(),
       parentAccess: [],
     }
-    this.getRoleList()
-    this.getParentAccessList()
     this.modalOk = this.modalOk.bind(this)
   }
   componentDidMount(): void {
+    this.getRoleList()
+    this.getParentAccessList()
     this.getList()
   }
   optionRouter(key: Options, item?: Access){

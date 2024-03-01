@@ -86,3 +86,11 @@ export function userListApi() {
     method: 'GET',
   })
 }
+
+// 获取用户列表
+export function routersListApi() {
+  return request({
+    url: '/user/routers',
+    method: 'GET',
+  })
+}

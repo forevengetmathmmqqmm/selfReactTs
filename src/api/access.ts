@@ -62,7 +62,7 @@ export interface Access {
   show: number
   icon?: string
   parentRouterId: number
-  roleId: number[]
+  roleIds: number[]
 }
 export const addAccessApi = (data: Access) => {
   return request({
